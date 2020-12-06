@@ -1,4 +1,5 @@
 <?php
+require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
 $email = mysqli_real_escape_string($conn, $_SESSION['email']);
 $sqlx = "SELECT name from user where email='$email'";
 $rezx = mysqli_query($conn, $sqlx);
