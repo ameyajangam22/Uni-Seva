@@ -9,7 +9,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
 
 $start = mysqli_real_escape_string($conn, $_POST['start']);
 $limit = mysqli_real_escape_string($conn, $_POST['limit']);
-$sql = "SELECT COMPLAINT_ID,EMAIL,TIMESTAMP,CATEGORY,LOCATION from lost_and_found LIMIT $limit OFFSET $start"; //We need to change this query since friends can see their friends posts only
+$sql = "SELECT COMPLAINT_ID,EMAIL,TIMESTAMP,CATEGORY,LOCATION from lost_and_found ORDER BY COMPLAINT_ID DESC LIMIT $limit OFFSET $start"; //We need to change this query since friends can see their friends posts only
 $result = mysqli_query($conn, $sql);
 
 $k = $start;
@@ -54,7 +54,7 @@ if (mysqli_num_rows($result) > 0) {
                 $j += 1;
             }
             echo '">
-                <img src="data:image/jpeg;charset=utf8;base64,' . base64_encode($row2['IMAGE']) . '" class="d-block" height=300 style="margin:auto"/>
+                <img src="data:image/jpeg;charset=utf8;base64,' . base64_encode($row2['IMAGE']) . '" class="d-block" height=300 style="margin:auto;"/>
                 </div>';
         }
         echo '</div>';
@@ -64,6 +64,8 @@ if (mysqli_num_rows($result) > 0) {
         echo
             "</li>
           </ul>
+          <div><button onclick='focuss(event)' value=" . $start . " class=' report btn btn btn-danger'>Report</button></div>
+          <div><button onclick='focuss(event)' value=" . $start . " class='comment btn btn-success'>Claim</button></div>
           </div>";
         $k += 1;
     }

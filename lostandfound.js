@@ -2,9 +2,11 @@ const fetchpostsbtn = document.getElementById("fetchpost");
 const postsarea = document.getElementById("postsarea");
 const loading = document.getElementById("loader");
 const postfocus = document.getElementsByClassName("posts-style");
+
 var start = 0;
 var limit = 3;
 var more = true;
+var opt=1;
 var output = "";
 window.addEventListener("scroll", function () {        //Checks if we have reached the end of the page and loads more content
   var { scrollTop, scrollHeight, clientHeight } = document.documentElement;

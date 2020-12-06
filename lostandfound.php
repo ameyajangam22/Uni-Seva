@@ -32,10 +32,9 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
     require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/sidebar.php';
     require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/navbar.php';
     ?>
-    <div class='filters' style='background-color: seagreen'>
-        <button class='btn btn-primary'></button>
-    </div>
+
     <div id="main">
+
         <div id="postsarea"></div>
         <div id="loader" class="loader">
             <!-- loading css animation -->
@@ -43,6 +42,17 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
             <div class="circle"></div>
             <div class="circle"></div>
         </div>
+        <style>
+            .filters {
+                background-color: wheat;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            .fil {
+                margin: 20px 30px;
+            }
+        </style>
     </div>
     <script>
         var visible = false;

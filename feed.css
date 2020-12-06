@@ -76,14 +76,6 @@ h2 {
   background-color: #0063b2ff;
   border-right: 2px solid rgba(30, 120, 117, 0.1);
   color: #fff;
-
-  /* position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 100vh;
-  z-index: 100;
-  transform: translateX(-100%); */
 }
 #postsarea {
   transition: transform 0.3s ease;
@@ -111,12 +103,13 @@ h2 {
   color: #f4f4f4;
   background-color: cornflowerblue;
 }
+
 .posts-style {
   margin: auto;
   margin-top: 10px;
   padding: 20px;
   width: 700px;
-  min-height: 500px;
+  min-height: 600px;
   background-color: #f4f4f4;
   border-radius: 20px;
   position: relative;
@@ -178,6 +171,15 @@ h6 {
 }
 #comment {
   margin-right: 10px;
+  margin-top: 60px;
+}
+.report {
+  position: absolute;
+  left: 20px;
+  bottom: 50px;
+  border-radius: 10px;
+  border: 0;
+  width: 15%;
 }
 #submit-comment {
   text-align: center;
@@ -224,6 +226,7 @@ h6 {
   bottom: 50px;
   border-radius: 10px;
   border: 0;
+  width: 15%;
 }
 .comment:focus {
   outline: 0;
