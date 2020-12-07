@@ -74,9 +74,10 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <?php
-    require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/sidebar.php';
+   <?php
     require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/navbar.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/sidebar.php';
+    
     ?>
     <div id="main">
         <div class='top'>

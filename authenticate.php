@@ -8,7 +8,7 @@ session_start();
 echo "Checking...";
 require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
 // The user might've entered the username or email so check both
-$stmt = $conn->prepare("select password from user where email=?");
+$stmt = $conn->prepare("select password,designation from user where email=?");
 $stmt->bind_param("s", $email);
 $email = $_POST["email"];
 $stmt->execute();
@@ -16,9 +16,23 @@ $result = $stmt->get_result();
 // If the username/email exists
 if (mysqli_num_rows($result)) {
     $row = $result->fetch_assoc();
+
     if (password_verify($_POST["password"], $row["password"])) {
         $_SESSION["email"] = $email;
-        header("Location: feed.php");
+        $_SESSION["Designation"]=$row["designation"];
+        if($_SESSION["Designation"]=="student"){
+            header("Location: user.php");
+        }
+        elseif ($_SESSION["Designation"]=="canteen") {
+           header("Location: menuCanteen.php");
+        }
+        elseif ($_SESSION["Designation"]=="employee") {
+           header("Location: report.php");
+        }
+        elseif ($_SESSION["Designation"]=="housekeeping") {
+           header("Location: housekeeper.php");
+        }
+       
         exit();
         // Redirect to the landing page
     } else {

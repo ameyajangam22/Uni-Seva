@@ -3,7 +3,7 @@
         <i class="fa fa-bars fa-2x"></i>
     </button>
     <h2>Uni-Seva</h2>
-    <a href="/spin/login/login.php">
+    <a href="/Uni-Seva/login.php">
         <button id="logout" class="btn btn-primary">Logout</button>
     </a>
 </nav>

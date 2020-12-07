@@ -5,30 +5,13 @@ if (!(isset($_SESSION["email"]))) {
     exit();
 }
 
+
 require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
-
-    
-
-     $sql="SELECT * FROM user where email='".$_SESSION["email"]."'";
-     $result=mysqli_query($conn,$sql);
-     $infos=mysqli_fetch_all($result,MYSQLI_ASSOC);
-     // print_r($infos);
-     $number=$infos[0]["PHONE_NO"];
-
-     // echo $number;
-
-         
-
-   
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -40,8 +23,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-    <title>Lost And Found</title>
-
+    <title>S.P.I.N</title>
 </head>
 
 <body>
@@ -50,9 +32,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
     require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/sidebar.php';
     
     ?>
-
     <div id="main">
-
         <div id="postsarea"></div>
         <div id="loader" class="loader">
             <!-- loading css animation -->
@@ -60,17 +40,6 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
             <div class="circle"></div>
             <div class="circle"></div>
         </div>
-        <style>
-            .filters {
-                background-color: wheat;
-                text-align: center;
-                margin-bottom: 40px;
-            }
-
-            .fil {
-                margin: 20px 30px;
-            }
-        </style>
     </div>
     <script>
         var visible = false;
@@ -90,35 +59,27 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
         var state = true;
         var likes = 0;
     </script>
-    <script>
-        function reportt(event) {
-            var complaint_id = event.currentTarget.name;
+    <!-- <script>
+        function focuss(event) {
+            var post_id = event.currentTarget.name;
             var start = event.currentTarget.value;
-            console.log(complaint_id);
+            console.log(post_id);
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "postfocussession.php", true);
+            xhr.open("POST", "/spin/posts/sessioncreate.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            var params = "complaint_id=" + complaint_id;
+            var params = "start=" + start + "&post_id=" + post_id;
             console.log(params);
             xhr.onload = function(event) {
                 if (this.status == 200) {
                     console.log(this.responseText);
-                    window.location = "reportfalse.php";
+                    window.location = "/spin/posts/postfocus.php";
                 }
             }
             xhr.send(params);
 
         }
-
-       function focuss(event){
-        console.log('<?php echo $number ?>');
-        alert("Contact"+ '<?php echo $number ?>');
-
-
-       }
- 
-    </script>
-    <script src="lostandfound.js"></script>
+    </script> -->
+    <script src="feed.js"></script>
 </body>
 
 </html>

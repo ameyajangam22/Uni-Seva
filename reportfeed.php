@@ -9,7 +9,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
 
 $start = mysqli_real_escape_string($conn, $_POST['start']);
 $limit = mysqli_real_escape_string($conn, $_POST['limit']);
-$sql = "SELECT COMPLAINT_ID,EMAIL,TIMESTAMP,CATEGORY,LOCATION from lost_and_found ORDER BY COMPLAINT_ID DESC LIMIT $limit OFFSET $start"; //We need to change this query since friends can see their friends posts only
+$sql = "SELECT REPORT_ID,ACCUSER_EMAIL,EXPLANATION,REPORTS.COMPLAINT_ID,RETREIVED_BY,CATEGORY,TIMESTAMP,LOCATION from REPORTS JOIN LOST_AND_FOUND ON REPORTS.COMPLAINT_ID=LOST_AND_FOUND.COMPLAINT_ID LIMIT $limit OFFSET $start;"; //We need to change this query since friends can see their friends posts only
 $result = mysqli_query($conn, $sql);
 
 $k = $start;
@@ -20,17 +20,19 @@ if (mysqli_num_rows($result) > 0) {
         echo
             "<div class='posts-style'>
             <div>
-            <h5 class='post-username'>" . $row['EMAIL'] . "</h5>
-            <p class='post-caption'>Date: " . $row['TIMESTAMP'] . "</p>
-            <p class='post-caption'>Category: " . $row['CATEGORY'] . "</p>
+            <h5 class='post-username'>" . $row['ACCUSER_EMAIL'] . "</h5>
+            <p class='post-caption'>Explanation: " . $row['EXPLANATION'] . "</p>
+            <P class='post-username'>" . $row['RETREIVED_BY'] . "</P>
+            <p class='post-caption'>Date: " . $row['CATEGORY'] . "</p>
+            <p class='post-caption'>Category: " . $row['TIMESTAMP'] . "</p>
             <p class='post-caption'>Location: " . $row['LOCATION'] . "</p>
             </div>
             <ul>
           " .
                 "<li>";
-        $sql2 = "SELECT IMAGE FROM lost_and_found WHERE COMPLAINT_ID=" . $row['COMPLAINT_ID'];
+        $sql2 = "SELECT COMPLAINT_ID,IMAGE FROM LOST_AND_FOUND WHERE (STATUS IS NULL OR STATUS !='Done') AND COMPLAINT_ID=" . $row['COMPLAINT_ID'];
         $result2 = mysqli_query($conn, $sql2);
-
+        
         echo
             '<div id="carousel' . $k . '" class="carousel slide" data-interval="false" data-wrap="false">
                 <ol class="carousel-indicators">';
@@ -54,9 +56,12 @@ if (mysqli_num_rows($result) > 0) {
                 $j += 1;
             }
             echo '">
-                <img src="data:image/jpeg;charset=utf8;base64,' . base64_encode($row2['IMAGE']) . '" class="d-block" height=300 style="margin:auto;"/>
+                <img src="data:image/jpeg;charset=utf8;base64,' . base64_encode($row2['IMAGE']) . '" class="d-block" height=300 style="margin:auto"/>
+                <br><form action="housekeeper.php" method="POST" > <input type="submit"  name="Done" value="Done"> <input type="hidden" name="cid" value="'.$row2["COMPLAINT_ID"].'"></form>
                 </div>';
         }
+        
+
         echo '</div>';
 
         echo '</div>';
@@ -64,11 +69,11 @@ if (mysqli_num_rows($result) > 0) {
         echo
             "</li>
           </ul>
-          <div><button onclick='reportt(event)' name =" . $row['COMPLAINT_ID'] . " value=" . $start . " class=' report btn btn btn-danger'>Report</button></div>
-          <div style='transform:translateY(50px)'> <a href=/Uni-Seva/claimItem.php?userInfo=".$row["EMAIL"]."><button  value=" . $start . " class='comment btn btn-success'>Claim</button></a></div>
           </div>";
         $k += 1;
+    
     }
 } else {
     echo "Reached";
 }
+//echo "<form action='cleaningreqs.php' method='POST' > <input type='submit'  name='Done' value='Done'></form>";

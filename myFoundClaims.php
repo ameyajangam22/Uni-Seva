@@ -4,24 +4,7 @@ if (!(isset($_SESSION["email"]))) {
     header("Location: login.php");
     exit();
 }
-
 require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
-
-    
-
-     $sql="SELECT * FROM user where email='".$_SESSION["email"]."'";
-     $result=mysqli_query($conn,$sql);
-     $infos=mysqli_fetch_all($result,MYSQLI_ASSOC);
-     // print_r($infos);
-     $number=$infos[0]["PHONE_NO"];
-
-     // echo $number;
-
-         
-
-   
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,9 +33,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
     require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/sidebar.php';
     
     ?>
-
+    <div class='filters' style='background-color: seagreen'>
+        <button class='btn btn-primary'></button>
+    </div>
     <div id="main">
-
         <div id="postsarea"></div>
         <div id="loader" class="loader">
             <!-- loading css animation -->
@@ -60,17 +44,6 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
             <div class="circle"></div>
             <div class="circle"></div>
         </div>
-        <style>
-            .filters {
-                background-color: wheat;
-                text-align: center;
-                margin-bottom: 40px;
-            }
-
-            .fil {
-                margin: 20px 30px;
-            }
-        </style>
     </div>
     <script>
         var visible = false;
@@ -90,35 +63,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
         var state = true;
         var likes = 0;
     </script>
-    <script>
-        function reportt(event) {
-            var complaint_id = event.currentTarget.name;
-            var start = event.currentTarget.value;
-            console.log(complaint_id);
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "postfocussession.php", true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            var params = "complaint_id=" + complaint_id;
-            console.log(params);
-            xhr.onload = function(event) {
-                if (this.status == 200) {
-                    console.log(this.responseText);
-                    window.location = "reportfalse.php";
-                }
-            }
-            xhr.send(params);
-
-        }
-
-       function focuss(event){
-        console.log('<?php echo $number ?>');
-        alert("Contact"+ '<?php echo $number ?>');
-
-
-       }
- 
-    </script>
-    <script src="lostandfound.js"></script>
+    <script src="myFoundClaims.js"></script>
 </body>
 
 </html>

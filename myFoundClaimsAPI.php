@@ -4,12 +4,13 @@ if (!(isset($_SESSION["email"]) && isset($_POST['start']))) {
     header("Location:login.php");
     exit();
 }
+$email=$_SESSION["email"];
 require $_SERVER['DOCUMENT_ROOT'] . '/Uni-Seva/dbConnection.php';
 
 
 $start = mysqli_real_escape_string($conn, $_POST['start']);
 $limit = mysqli_real_escape_string($conn, $_POST['limit']);
-$sql = "SELECT COMPLAINT_ID,EMAIL,TIMESTAMP,CATEGORY,LOCATION from lost_and_found ORDER BY COMPLAINT_ID DESC LIMIT $limit OFFSET $start"; //We need to change this query since friends can see their friends posts only
+$sql = "SELECT COMPLAINT_ID,EMAIL,TIMESTAMP,CATEGORY,LOCATION,RETREIVED_BY from lost_and_found where email='".$email."' LIMIT $limit OFFSET $start"; //We need to change this query since friends can see their friends posts only
 $result = mysqli_query($conn, $sql);
 
 $k = $start;
@@ -54,19 +55,47 @@ if (mysqli_num_rows($result) > 0) {
                 $j += 1;
             }
             echo '">
-                <img src="data:image/jpeg;charset=utf8;base64,' . base64_encode($row2['IMAGE']) . '" class="d-block" height=300 style="margin:auto;"/>
+                <img src="data:image/jpeg;charset=utf8;base64,' . base64_encode($row2['IMAGE']) . '" class="d-block" height=300 style="margin:auto"/>
                 </div>';
         }
         echo '</div>';
 
         echo '</div>';
 
-        echo
+        if($row["RETREIVED_BY"]!="None"){
+            echo "</li>
+          </ul>
+
+          <strong>Claimed By:</strong>".$row["RETREIVED_BY"]."
+          </div>";
+
+        }else{
+            echo
             "</li>
           </ul>
-          <div><button onclick='reportt(event)' name =" . $row['COMPLAINT_ID'] . " value=" . $start . " class=' report btn btn btn-danger'>Report</button></div>
-          <div style='transform:translateY(50px)'> <a href=/Uni-Seva/claimItem.php?userInfo=".$row["EMAIL"]."><button  value=" . $start . " class='comment btn btn-success'>Claim</button></a></div>
+          <form action='ClaimAPI.php' method='POST'>
+          <div class='row'>
+          <div class='col-lg-3'>
+          <label>Claimed By:</label>
+          </div>
+          <div class='col-lg-3' style='transform:translate(-50px,-10px);'>
+          <input type='text' name='claimed'>
+          </div>
+          <div class='row'>
+          <div class='col-lg-3'>
+          <label>COMPLAINT_ID:</label>
+          </div>
+          <div class='col-lg-3' style='transform:translate(50px,-10px);'>
+          <input type='text' name='complaint_id' value=".$row['COMPLAINT_ID'] .">
+          </div>
+          </div>
+          <button type='submit'>Submit Claim</button>
+          </form>
           </div>";
+
+        }
+        
+        
         $k += 1;
     }
 } else {
